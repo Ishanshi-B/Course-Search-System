@@ -1,0 +1,30 @@
+Business Requirement: 
+Search data across tens of thousands of courses
+Business challenge: You're a large media or education company with tens of thousands of courses, articles, and learning materials. Your challenge is helping users find the specific information they need when it's buried across this massive and diverse content library.
+
+Tech stack: Vertex AI Search, BigQuery, Google Cloud Storage.
+
+Blueprint: All course content, including text, videos, and metadata, is indexed from sources like Google Cloud Storage and BigQuery into Vertex AI Search. ➝ A user goes to the learning platform and uses a natural language search query like, "I want to learn about the basics of financial modeling in spreadsheets, but I only have 30 minutes." ➝ Vertex AI Search understands the multiple intents (topic, format, duration) and queries across the entire catalog. ➝ It returns a ranked list of the most relevant results, such as a specific 10-minute video lecture and a 20-minute practical exercise, providing a much more relevant result than a simple keyword search.
+
+![alt text](image.png)
+
+Architectural Requirement and consideration: 
+As per the problem statement we know right of the bat that this is gonna be a search problem and not a classification problem or a generation problem as we are told we need to help users "FIND" specific content. 
+
+Then it was cruical to note that why didn't we just go with a normal ctrl + f search since the context of the courses mattered. We didn't just need a word by word search but more of a contextual search. Which in turn points towards a more semantic/vector search meaning we need embedding. 
+We had the choice to deo LLM directly and the issue with that would be that it would be slow and expensive at a high scale. Then the keyword expansion, so dividing it into synonyms and related terms and then doing a normal keyworld search would be simpler but brittle. We could potentially miss some connections. 
+
+We then knew that the input needed to be a natural language query from the user and they needed to get a ranked list of relevant courses. 
+
+Data consideration: Since I don't have 50k real courses, so i would need to make realistic data. Meaning we need a process for data creation. This data would need to include - title, topic, format, duration, description.
+
+Happy Path: 
+1. User types the query 
+2. The query needs to be understood 
+3. Need to search the course 
+4. Filter needs to filter/rank the result 
+5. We need to show the result
+
+Pattern/ Skeleton:
+Raw Data comes in -> Process and Store the data -> Query/request the data -> Transform -> Return the results 
+
