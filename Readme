@@ -28,3 +28,11 @@ Happy Path:
 Pattern/ Skeleton:
 Raw Data comes in -> Process and Store the data -> Query/request the data -> Transform -> Return the results 
 
+
+
+Next steps:
+1. Want to be able to reduce hallucination 
+2. I want to get it to the point that it asks questions about hey i dont have that info what would you recommend for something of that sort 
+3. Better UI
+4. Better query parser
+5. Having things be attached via nodes? graphical?
